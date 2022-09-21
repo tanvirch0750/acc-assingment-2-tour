@@ -35,3 +35,14 @@ exports.deleteTourByIdService = async (id) => {
   const result = await Tour.deleteOne({ _id: id });
   return result;
 };
+
+exports.getCheapestTourService = async () => {
+  const tours = await Tour.find().sort('price').limit(3);
+
+  const data = {
+    foundTours: tours.length,
+    tours,
+  };
+
+  return data;
+};
