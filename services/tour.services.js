@@ -21,3 +21,8 @@ exports.updateTourByIdService = async (id, data) => {
   const result = await tour.set(data).save();
   return result;
 };
+
+exports.deleteTourByIdService = async (id) => {
+  const result = await Tour.deleteOne({ _id: id });
+  return result;
+};

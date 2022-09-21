@@ -2,6 +2,7 @@ const {
   createTourService,
   getTourService,
   updateTourByIdService,
+  deleteTourByIdService,
 } = require('../services/tour.services');
 
 exports.createTour = async (req, res, next) => {
@@ -54,6 +55,31 @@ exports.updateTourById = async (req, res, next) => {
     res.status(400).json({
       status: 'failed',
       message: 'Product upadate failed',
+      error: error.message,
+    });
+  }
+};
+
+exports.deleteTourById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await deleteTourByIdService(id);
+
+    if (!result.deletedCount) {
+      return res.status(400).json({
+        status: 'failed',
+        error: 'could not delete the tour',
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Tour deleted successfully',
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'failed',
+      message: 'Tour delete failed',
       error: error.message,
     });
   }
