@@ -46,3 +46,23 @@ exports.getCheapestTourService = async () => {
 
   return data;
 };
+
+exports.getTourByIdService = async (id) => {
+  const tour = await Tour.findByIdAndUpdate(
+    id,
+    { $inc: { viewCount: 1 } },
+    { new: true }
+  );
+  return tour;
+};
+
+exports.getTrendingTourService = async () => {
+  const tours = await Tour.find().sort({ viewCount: -1 }).limit(3);
+
+  const data = {
+    foundTours: tours.length,
+    tours,
+  };
+
+  return data;
+};
