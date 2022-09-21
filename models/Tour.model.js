@@ -29,12 +29,12 @@ const tourSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'A tour must have a price'],
   },
-  descripton: {
+  description: {
     type: String,
     trim: true,
     required: [true, 'A tour must have a description'],
   },
-  images: String,
+  image: String,
   viewCount: {
     type: Number,
     default: 0,

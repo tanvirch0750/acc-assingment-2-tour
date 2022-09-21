@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const tourRoute = require('./routes/tour.route.js');
 
 // middlewares
 app.use(express.json());
@@ -11,6 +12,6 @@ app.get('/', (req, res) => {
 });
 
 // route
-//app.use('/api/v1/product', productRoute);
+app.use('/api/v1', tourRoute);
 
 module.exports = app;
