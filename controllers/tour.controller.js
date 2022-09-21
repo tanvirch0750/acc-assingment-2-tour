@@ -25,7 +25,30 @@ exports.createTour = async (req, res, next) => {
 
 exports.getTours = async (req, res, next) => {
   try {
-    const tours = await getTourService();
+    const excludeFields = ['page', 'sort', 'limit', 'fields'];
+    const filters = { ...req.query };
+    excludeFields.forEach((field) => delete filters[field]);
+
+    const queries = {};
+
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      queries.sortBy = sortBy;
+    }
+
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      queries.fields = fields;
+    }
+
+    if (req.query.page) {
+      const { page = 1, limit = 5 } = req.query;
+      const skipValue = (parseInt(page) - 1) * parseInt(limit);
+      queries.skip = skipValue;
+      queries.limit = parseInt(limit);
+    }
+
+    const tours = await getTourService(filters, queries);
 
     res.status(200).json({
       status: 'success',
