@@ -15,3 +15,9 @@ exports.getTourService = async () => {
 
   return data;
 };
+
+exports.updateTourByIdService = async (id, data) => {
+  const tour = await Tour.findById(id);
+  const result = await tour.set(data).save();
+  return result;
+};
